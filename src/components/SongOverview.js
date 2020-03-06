@@ -1,33 +1,41 @@
-import React from "react";
+import React, { Component } from "react";
+import Header from "./Header";
+import SongForm from "./SongForm";
+import SongList from "./SongList";
+import SongHeader from "./SongHeader";
 
 class SongOverview extends Component {
   constructor() {
     super();
     this.state = {
-      songs: []
+      playList: [
+        {
+          id: "",
+          song: "",
+          artist: "",
+          genre: "",
+          rating: ""
+        }
+      ]
     };
   }
 
-  addSong = song => {
-    // doe iets om de state aan te passen
-  };
-
   render() {
+    const addSong = song => {
+      this.setState({ playList: this.state.playList.concat(song) });
+    };
     return (
-      <div>
-        <SongForm addSong={this.addSong} />
-        <table style="width:100%">
-          <tr className="song-header">
-            <th className="song-row__item">Song</th>
-            <th className="song-row__item">Artist</th>
-            <th className="song-row__item">Genre</th>
-            <th className="song-row__item">Rating</th>
-          </tr>
-        </table>
-        <SongList songs={this.state.songs} />
+      <div className={"song-overview"}>
+        <Header />
+        <SongForm
+          addSong={addSong}
+          handleChangeSong={this.handleChangeSong}
+          handleChangeArtist={this.handleChangeArtist}
+        />
+        <SongHeader />
+        <SongList playList={this.state.playList} />
       </div>
     );
   }
 }
-
 export default SongOverview;
